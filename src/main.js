@@ -6,6 +6,9 @@ import { renderDashboard } from './pages/dashboard.js';
 import { renderProducts } from './pages/products.js';
 import { renderOrders } from './pages/orders.js';
 import { renderStock } from './pages/stock.js';
+import { renderCategories } from './pages/categories.js';
+import { renderProfile } from './pages/profile.js';
+import { renderReports } from './pages/reports.js';
 
 // ============================================
 // APP INITIALIZATION
@@ -14,12 +17,16 @@ import { renderStock } from './pages/stock.js';
 const pageNames = {
     dashboard: 'Dashboard',
     products: 'Ürünler',
+    categories: 'Kategoriler',
     orders: 'Siparişler',
     stock: 'Stok Yönetimi',
+    profile: 'Ayarlar',
+    reports: 'Raporlar'
 };
 
 function init() {
     setupLoginForm();
+    setupRegisterForm();
     setupSidebar();
     setupLogout();
 
@@ -96,6 +103,15 @@ function renderPage(page) {
         case 'stock':
             renderStock(container);
             break;
+        case 'categories':
+            renderCategories(container);
+            break;
+        case 'profile':
+            renderProfile(container);
+            break;
+        case 'reports':
+            renderReports(container);
+            break;
         default:
             renderDashboard(container);
             break;
@@ -138,19 +154,114 @@ function setupLoginForm() {
             errorEl.textContent = err.message || 'Giriş yapılırken bir hata oluştu';
             errorEl.classList.remove('hidden');
         } finally {
-            btnText.classList.remove('hidden');
             btnLoader.classList.add('hidden');
+            btnText.classList.remove('hidden');
             btn.disabled = false;
         }
     });
 
-    // Toggle password visibility
-    if (togglePwd) {
-        togglePwd.addEventListener('click', () => {
-            const input = document.getElementById('login-password');
-            input.type = input.type === 'password' ? 'text' : 'password';
-        });
-    }
+    togglePwd.addEventListener('click', () => {
+        const input = document.getElementById('login-password');
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+    });
+
+    // Toggle logic
+    document.getElementById('go-to-register').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('register-form').classList.remove('hidden');
+        document.querySelector('.login-header p').textContent = 'Yeni bir mağaza hesabı oluşturun';
+    });
+
+    document.getElementById('go-to-login').addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('register-form').classList.add('hidden');
+        document.getElementById('login-form').classList.remove('hidden');
+        document.querySelector('.login-header p').textContent = 'Mağazanızı yönetmek için giriş yapın';
+    });
+}
+
+function setupRegisterForm() {
+    const form = document.getElementById('register-form');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const fname = document.getElementById('reg-fname').value.trim();
+        const lname = document.getElementById('reg-lname').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        const phone = document.getElementById('reg-phone').value.trim();
+        const password = document.getElementById('reg-password').value;
+        const merchantName = document.getElementById('reg-mname').value.trim();
+
+        const errorEl = document.getElementById('register-error');
+        const btn = document.getElementById('register-btn');
+        const btnText = btn.querySelector('.btn-text');
+        const btnLoader = btn.querySelector('.btn-loader');
+
+        errorEl.classList.add('hidden');
+        btnText.classList.add('hidden');
+        btnLoader.classList.remove('hidden');
+        btn.disabled = true;
+
+        try {
+            // 1. Register User
+            const regRes = await api.register({
+                firstName: fname,
+                lastName: lname,
+                email: email,
+                phone: phone,
+                password: password,
+                role: 2 // Merchant role (assuming 2 based on previous tests)
+            });
+
+            if (!regRes.success) {
+                throw new Error(regRes.message || 'Kayıt başarısız oldu');
+            }
+
+            // 2. Login to get token (using base user login, not merchant login)
+            const loginRes = await api.userLogin(email, password);
+            if (!loginRes.success || !loginRes.data) {
+                throw new Error('Kayıt başarılı ancak giriş yapılamadı. Lütfen giriş yapmayı deneyin.');
+            }
+            saveAuthResponse(loginRes.data);
+
+            // 3. Create Merchant Profile
+            const merchRes = await api.createMerchant({
+                name: merchantName,
+                description: 'Yeni Mağaza',
+                phone: phone,
+                address: 'Belirtilmedi',
+                minimumOrderAmount: 0,
+                deliveryFee: 0,
+                autoAcceptOrders: false,
+                preparationTimeMinutes: 30
+            });
+
+            if (merchRes.success) {
+                showToast('Mağaza başarıyla oluşturuldu!');
+
+                // Refresh login session to get the latest merchant ID bound to token
+                const finalLogin = await api.login(email, password);
+                if (finalLogin.success && finalLogin.data) {
+                    saveAuthResponse(finalLogin.data);
+                }
+                window.location.hash = '#/dashboard';
+            } else {
+                throw new Error(merchRes.message || 'Mağaza profili oluşturulamadı.');
+            }
+
+        } catch (err) {
+            console.error('Registration error:', err);
+            errorEl.textContent = err.message || 'Bir hata oluştu';
+            errorEl.classList.remove('hidden');
+        } finally {
+            btnLoader.classList.add('hidden');
+            btnText.classList.remove('hidden');
+            btn.disabled = false;
+        }
+    });
 }
 
 // ============================================

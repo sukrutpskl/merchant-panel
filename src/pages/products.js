@@ -141,10 +141,13 @@ function setupProductEvents() {
 function openModal() {
   document.getElementById('product-form').reset();
   document.getElementById('image-preview').innerHTML = '';
+  // Process categories into hierarchy
+  const hierarchy = formatCategoryHierarchy(categories);
+
   // Populate category dropdown
   const select = document.getElementById('p-category');
   select.innerHTML = '<option value="">Kategori seçin</option>' +
-    categories.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+    hierarchy.map(c => `<option value="${c.id}">${escapeHtml(c.displayName)}</option>`).join('');
   document.getElementById('product-modal').classList.add('active');
 }
 
@@ -159,15 +162,35 @@ async function loadCategories() {
     // Handle both {data: [...]} and direct array response
     categories = Array.isArray(res) ? res : (Array.isArray(res?.data) ? res.data : []);
     console.log('Parsed categories:', categories);
+
+    // Process categories into hierarchy
+    const hierarchy = formatCategoryHierarchy(categories);
+
     const filterSelect = document.getElementById('category-filter');
     if (filterSelect) {
       filterSelect.innerHTML = '<option value="">Tüm Kategoriler</option>' +
-        categories.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+        hierarchy.map(c => `<option value="${c.id}">${escapeHtml(c.displayName)}</option>`).join('');
     }
   } catch (err) {
     console.error('Categories error:', err);
     showToast('Kategoriler yüklenemedi: ' + err.message, 'error');
   }
+}
+
+// Helper function to process categories into a formatted flat list for dropdowns
+function formatCategoryHierarchy(cats) {
+  const tree = [];
+  const mainCats = cats.filter(c => !c.parentCategoryId).sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+
+  mainCats.forEach(mainCat => {
+    tree.push({ ...mainCat, displayName: mainCat.name });
+    const subCats = cats.filter(c => c.parentCategoryId === mainCat.id).sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+    subCats.forEach(sub => {
+      tree.push({ ...sub, displayName: `${mainCat.name} > ${sub.name}` });
+    });
+  });
+
+  return tree;
 }
 
 async function loadProducts() {
@@ -223,6 +246,10 @@ function renderProductGrid(container, products) {
                   <span class="toggle-slider"></span>
                 </label>
               </div>
+            </div>
+            <div style="margin-top: 12px; display: flex; gap: 8px;">
+              <button class="btn btn-sm btn-secondary" disabled title="API tarafından desteklenmiyor" style="flex:1; opacity:0.6; cursor:not-allowed;">Düzenle</button>
+              <button class="btn btn-sm btn-danger" disabled title="API tarafından desteklenmiyor" style="flex:1; opacity:0.6; cursor:not-allowed;">Sil</button>
             </div>
           </div>
         </div>

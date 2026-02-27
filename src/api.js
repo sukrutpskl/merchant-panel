@@ -117,6 +117,27 @@ export const api = {
         });
     },
 
+    userLogin(phoneOrEmail, password) {
+        return request('/api/Auth/login', {
+            method: 'POST',
+            body: JSON.stringify({ phoneOrEmail, password }),
+        });
+    },
+
+    register(data) {
+        return request('/api/Auth/register', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    },
+
+    createMerchant(data) {
+        return request('/api/Merchants', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    },
+
     logout() {
         const token = getToken();
         return request('/api/merchant/auth/logout', {
@@ -145,17 +166,19 @@ export const api = {
         return request(`/api/merchants/${mid}/orders`);
     },
 
-    // Products — uses Catalog endpoint
     getProducts(params = {}) {
-        const mid = getMerchantId();
-        if (!mid) return Promise.resolve({ success: true, data: [] });
         const query = new URLSearchParams();
         if (params.categoryId) query.set('categoryId', params.categoryId);
         if (params.search) query.set('search', params.search);
         if (params.page) query.set('page', params.page);
         if (params.pageSize) query.set('pageSize', params.pageSize);
         const qs = query.toString();
-        return request(`/api/Catalog/merchants/${mid}/products${qs ? '?' + qs : ''}`);
+        // Since getProducts has pagination etc, and there's no direct matching in merchant ops, 
+        // we'll fetch from merchant/products if exists or /merchant/menu/categories/{c_id}/products
+        if (params.categoryId) {
+            return request(`/api/merchant/menu/categories/${params.categoryId}/products${qs ? '?' + qs : ''}`);
+        }
+        return request(`/api/merchant/products${qs ? '?' + qs : ''}`);
     },
 
     getProduct(id) {
@@ -163,15 +186,10 @@ export const api = {
     },
 
     createProduct(data) {
-        // Try merchant endpoint, fallback to catalog
+        // According to swagger, CreateProductRequest has `categoryId` in the body
         return request('/api/merchant/products', {
             method: 'POST',
             body: JSON.stringify(data),
-        }).catch(() => {
-            return request('/api/Catalog/products', {
-                method: 'POST',
-                body: JSON.stringify(data),
-            });
         });
     },
 
@@ -187,31 +205,27 @@ export const api = {
         });
     },
 
-    // Categories (merchant-specific via Catalog)
+    // Categories (merchant-specific)
     getCategories() {
-        const mid = getMerchantId();
-        if (mid) {
-            return request(`/api/Catalog/merchants/${mid}/categories`);
-        }
-        // Fallback to global categories
-        return request('/api/Categories');
+        return request(`/api/merchant/menu/categories`);
     },
 
     createCategory(data) {
-        return request('/api/Catalog/categories', {
+        // data can include { name, description, displayOrder, parentCategoryId }
+        return request('/api/merchant/menu/categories', {
             method: 'POST',
             body: JSON.stringify(data),
         });
     },
 
     deleteCategory(categoryId) {
-        return request(`/api/Catalog/categories/${categoryId}`, {
+        return request(`/api/merchant/menu/categories/${categoryId}`, {
             method: 'DELETE',
         });
     },
 
     getCategoryProducts(categoryId) {
-        return request(`/api/Categories/${categoryId}/products`);
+        return request(`/api/merchant/menu/categories/${categoryId}/products`);
     },
 
     // Orders
@@ -236,6 +250,40 @@ export const api = {
         });
     },
 
+    // Profile & Settings
+    getProfile() {
+        return request('/api/Merchants/my-profile');
+    },
+
+    updateProfile(data) {
+        // According to swagger, profile uses PUT /api/Merchants/{id} (or we can just mock it if not fully there, but my-profile usually has a paired put. Let's strictly use the ones available in Swagger)
+        // From swagger search: "/api/Merchants/{id}"
+        const mid = getMerchantId();
+        return request(`/api/Merchants/${mid}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    },
+
+    getWorkingHours() {
+        const mid = getMerchantId();
+        return request(`/api/Merchants/${mid}/working-hours`);
+    },
+
+    updateWorkingHours(data) {
+        return request('/api/merchant/settings/working-hours', {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    },
+
+    updateDeliverySettings(data) {
+        return request('/api/merchant/settings/delivery', {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    },
+
     // File Upload
     uploadFile(file) {
         const formData = new FormData();
@@ -246,5 +294,5 @@ export const api = {
             headers: token ? { Authorization: `Bearer ${token}` } : {},
             body: formData,
         }).then(r => r.json());
-    },
+    }
 };
