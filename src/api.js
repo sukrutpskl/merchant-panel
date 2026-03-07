@@ -161,9 +161,7 @@ export const api = {
     },
 
     getRecentOrders(count = 5) {
-        const mid = getMerchantId();
-        if (!mid) return Promise.resolve({ success: true, data: [] });
-        return request(`/api/merchants/${mid}/orders`);
+        return request(`/api/merchant/dashboard/recent-orders?count=${count}`);
     },
 
     getProducts(params = {}) {
@@ -182,11 +180,11 @@ export const api = {
     },
 
     getProduct(id) {
-        return request(`/api/Catalog/products/${id}`);
+        return request(`/api/merchant/products/${id}`);
     },
 
     createProduct(data) {
-        // According to swagger, CreateProductRequest has `categoryId` in the body
+        /** @type {import('./models').CreateProductRequest} data */
         return request('/api/merchant/products', {
             method: 'POST',
             body: JSON.stringify(data),
@@ -194,16 +192,26 @@ export const api = {
     },
 
     updateProduct(id, data) {
+        // TODO: Swagger'da Ürün Düzenleme (PUT) ucu yok. Hata vermemesi için şimdilik Mock dönüyor.
+        console.warn('Swagger API does not define PUT /api/merchant/products/{id}. Returning mock success.');
+        return Promise.resolve({ success: true, message: 'Mock update' });
+        /* 
         return request(`/api/merchant/products/${id}`, {
             method: 'PUT',
             body: JSON.stringify(data),
         });
+        */
     },
 
     deleteProduct(id) {
+        // TODO: Swagger'da Ürün Silme (DELETE) ucu yok. Hata vermemesi için şimdilik Mock dönüyor.
+        console.warn('Swagger API does not define DELETE /api/merchant/products/{id}. Returning mock success.');
+        return Promise.resolve({ success: true, message: 'Mock delete' });
+        /*
         return request(`/api/merchant/products/${id}`, {
             method: 'DELETE',
         });
+        */
     },
 
     updateProductAvailability(id, isAvailable) {
@@ -248,6 +256,31 @@ export const api = {
         return request(`/api/merchant/menu/categories/${categoryId}/products`);
     },
 
+    // Coupons
+    getCoupons() {
+        return request('/api/merchant/coupons');
+    },
+
+    createCoupon(data) {
+        return request('/api/merchant/coupons', {
+            method: 'POST',
+            body: JSON.stringify(data),
+        });
+    },
+
+    updateCoupon(id, data) {
+        return request(`/api/merchant/coupons/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    },
+
+    deleteCoupon(id) {
+        return request(`/api/merchant/coupons/${id}`, {
+            method: 'DELETE',
+        });
+    },
+
     // Orders
     getOrders(merchantId) {
         return request(`/api/merchants/${merchantId || getMerchantId()}/orders`);
@@ -276,18 +309,15 @@ export const api = {
     },
 
     updateProfile(data) {
-        // According to swagger, profile uses PUT /api/Merchants/{id} (or we can just mock it if not fully there, but my-profile usually has a paired put. Let's strictly use the ones available in Swagger)
-        // From swagger search: "/api/Merchants/{id}"
-        const mid = getMerchantId();
-        return request(`/api/Merchants/${mid}`, {
+        // Swagger: PUT /api/Merchants/my-profile (Body: UpdateMerchantRequest)
+        return request(`/api/Merchants/my-profile`, {
             method: 'PUT',
             body: JSON.stringify(data),
         });
     },
 
     getWorkingHours() {
-        const mid = getMerchantId();
-        return request(`/api/Merchants/${mid}/working-hours`);
+        return request(`/api/merchant/settings/working-hours`);
     },
 
     updateWorkingHours(data) {

@@ -56,8 +56,12 @@ export function renderCategories(container) {
               <textarea id="c-desc" rows="3" placeholder="İsteğe bağlı açıklama"></textarea>
             </div>
             <div class="form-group">
-              <label for="c-image">Kategori Görseli URL *</label>
-              <input type="url" id="c-image" required placeholder="https://example.com/image.jpg" />
+              <label for="c-image">Kategori Görseli *</label>
+              <input type="file" id="c-image-file" accept="image/*" />
+              <div id="c-image-preview-container" style="display:none; margin-top:10px;">
+                <img id="c-image-preview" src="" alt="Önizleme" style="max-height: 100px; border-radius: 4px;" />
+              </div>
+              <input type="hidden" id="c-image-url" />
             </div>
             <div class="form-group">
               <label for="c-order">Sıra (Display Order)</label>
@@ -82,7 +86,27 @@ function setupCategoryEvents() {
     editCategoryId = null;
     document.getElementById('cat-modal-title').textContent = 'Yeni Kategori Ekle';
     document.getElementById('category-form').reset();
+    document.getElementById('c-image-preview-container').style.display = 'none';
+    document.getElementById('c-image-url').value = '';
     document.getElementById('category-modal').classList.add('active');
+  });
+
+  // Handle file selection preview
+  document.getElementById('c-image-file').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      document.getElementById('c-image-preview').src = url;
+      document.getElementById('c-image-preview-container').style.display = 'block';
+    } else {
+      const existingUrl = document.getElementById('c-image-url').value;
+      if (existingUrl) {
+        document.getElementById('c-image-preview').src = existingUrl;
+        document.getElementById('c-image-preview-container').style.display = 'block';
+      } else {
+        document.getElementById('c-image-preview-container').style.display = 'none';
+      }
+    }
   });
 
   const closeModal = () => document.getElementById('category-modal').classList.remove('active');
@@ -96,16 +120,36 @@ function setupCategoryEvents() {
   document.getElementById('cat-modal-save').addEventListener('click', async () => {
     const name = document.getElementById('c-name').value.trim();
     const description = document.getElementById('c-desc').value.trim();
-    const imageUrl = document.getElementById('c-image').value.trim();
     const displayOrder = parseInt(document.getElementById('c-order').value) || 0;
     const parentCategoryId = document.getElementById('c-parent').value || null;
 
-    if (!name || !imageUrl) {
-      showToast('Kategori adı ve görsel URL zorunludur', 'error');
+    const fileInput = document.getElementById('c-image-file');
+    let imageUrl = document.getElementById('c-image-url').value;
+    const saveBtn = document.getElementById('cat-modal-save');
+
+    if (!name) {
+      showToast('Kategori adı zorunludur', 'error');
+      return;
+    }
+
+    if (!imageUrl && (!fileInput.files || fileInput.files.length === 0)) {
+      showToast('Kategori boyutu/görseli seçilmesi zorunludur', 'error');
       return;
     }
 
     try {
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Yükleniyor...';
+
+      if (fileInput.files && fileInput.files.length > 0) {
+        const uploadRes = await api.uploadFile(fileInput.files[0]);
+        if (uploadRes.success && uploadRes.data && uploadRes.data.url) {
+          imageUrl = uploadRes.data.url;
+        } else {
+          throw new Error('Görsel yüklenemedi');
+        }
+      }
+
       if (editCategoryId) {
         await api.updateCategory(editCategoryId, { name, description, imageUrl, displayOrder, parentCategoryId });
         showToast('Kategori başarıyla güncellendi');
@@ -117,6 +161,9 @@ function setupCategoryEvents() {
       loadCategories();
     } catch (err) {
       showToast(err.message, 'error');
+    } finally {
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Kaydet';
     }
   });
 }
@@ -225,7 +272,18 @@ function renderCategoryTable() {
       document.getElementById('c-name').value = cat.name || '';
       document.getElementById('c-parent').value = cat.parentCategoryId || '';
       document.getElementById('c-desc').value = cat.description || '';
-      document.getElementById('c-image').value = cat.imageUrl || '';
+
+      const imgUrl = cat.imageUrl || '';
+      document.getElementById('c-image-url').value = imgUrl;
+      document.getElementById('c-image-file').value = ''; // Reset file selection
+
+      if (imgUrl) {
+        document.getElementById('c-image-preview').src = imgUrl;
+        document.getElementById('c-image-preview-container').style.display = 'block';
+      } else {
+        document.getElementById('c-image-preview-container').style.display = 'none';
+      }
+
       document.getElementById('c-order').value = cat.displayOrder || 0;
 
       document.getElementById('category-modal').classList.add('active');
