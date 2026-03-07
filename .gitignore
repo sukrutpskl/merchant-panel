@@ -1,5 +1,42 @@
+# Dependencies
 node_modules/
-*.log
-.DS_Store
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
 dist/
-.env*
+
+# Misc
+.DS_Store
+*.pem
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.fleet/
+.vscode-test/
+
+# System Files
+Thumbs.db
+desktop.ini
+
+# Project specific ignores
+endpoints.txt
+swagger.json
+swaggerv1.json
+*.cjs
+*.js.map

@@ -192,26 +192,16 @@ export const api = {
     },
 
     updateProduct(id, data) {
-        // TODO: Swagger'da Ürün Düzenleme (PUT) ucu yok. Hata vermemesi için şimdilik Mock dönüyor.
-        console.warn('Swagger API does not define PUT /api/merchant/products/{id}. Returning mock success.');
-        return Promise.resolve({ success: true, message: 'Mock update' });
-        /* 
         return request(`/api/merchant/products/${id}`, {
             method: 'PUT',
             body: JSON.stringify(data),
         });
-        */
     },
 
     deleteProduct(id) {
-        // TODO: Swagger'da Ürün Silme (DELETE) ucu yok. Hata vermemesi için şimdilik Mock dönüyor.
-        console.warn('Swagger API does not define DELETE /api/merchant/products/{id}. Returning mock success.');
-        return Promise.resolve({ success: true, message: 'Mock delete' });
-        /*
         return request(`/api/merchant/products/${id}`, {
             method: 'DELETE',
         });
-        */
     },
 
     updateProductAvailability(id, isAvailable) {
