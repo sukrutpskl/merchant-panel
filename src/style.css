@@ -504,52 +504,21 @@ img {
 }
 
 .social-icons-row a {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
-  padding: 6px;
+  background: transparent;
 }
 
-/* Specific colors from the row in image */
-.social-icons-row a:nth-child(1) {
-  background: #333333;
+.social-icon-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
 }
-
-/* X/Twitter black/gray */
-.social-icons-row a:nth-child(2) {
-  background: #25D366;
-}
-
-/* WhatsApp green */
-.social-icons-row a:nth-child(3) {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-}
-
-/* IG */
-.social-icons-row a:nth-child(4) {
-  background: #1877F2;
-}
-
-/* FB */
-.social-icons-row a:nth-child(5) {
-  background: #000000;
-}
-
-/* TikTok */
-.social-icons-row a:nth-child(6) {
-  background: #FF0000;
-}
-
-/* YT */
-.social-icons-row a:nth-child(7) {
-  background: #0077b5;
-}
-
-/* LinkedIn */
 
 .social-icons-row a:hover {
   transform: scale(1.1);
@@ -845,29 +814,31 @@ img {
   gap: 12px;
 }
 
-.sidebar-socials {
+.sidebar-social-icons {
   display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+  gap: 8px;
   justify-content: center;
+  margin-bottom: 10px;
 }
 
-.social-icon {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
+.sidebar-social-icons .social-icon-img {
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
-  /* Fallback for colored icons if using SVGs or transparent PNGs */
-  padding: 2px;
+  transition: transform 0.2s;
 }
 
-.social-icon img {
+.sidebar-social-icons .social-icon-img:hover {
+  transform: scale(1.1);
+}
+
+.sidebar-social-icons img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  border-radius: 3px;
 }
 
 .sidebar-brand-text {
