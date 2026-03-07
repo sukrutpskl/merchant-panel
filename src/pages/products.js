@@ -51,31 +51,31 @@ export function renderProducts(container) {
         <div class="modal-body">
           <form id="product-form">
             <div class="form-group">
-              <label for="p-name">Ürün Adı *</label>
+              <label for="p-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>Ürün Adı *</label>
               <input type="text" id="p-name" required placeholder="Ürün adını girin" />
             </div>
             <div class="form-group">
-              <label for="p-desc">Açıklama</label>
+              <label for="p-desc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Açıklama</label>
               <textarea id="p-desc" rows="3" placeholder="Ürün açıklaması"></textarea>
             </div>
             <div class="form-row">
               <div class="form-group">
-                <label for="p-price">Fiyat (₺) *</label>
+                <label for="p-price"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>Fiyat (₺) *</label>
                 <input type="number" id="p-price" step="0.01" min="0" required placeholder="0.00" />
               </div>
               <div class="form-group">
-                <label for="p-category">Kategori *</label>
+                <label for="p-category"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>Kategori *</label>
                 <select id="p-category" required>
                   <option value="">Kategori seçin</option>
                 </select>
               </div>
             </div>
-            <div class="form-group">
-              <label for="p-image">Görsel URL</label>
+             <div class="form-group">
+              <label for="p-image"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>Görsel URL</label>
               <input type="text" id="p-image" placeholder="https://..." />
             </div>
             <div class="form-group">
-              <label>Veya Dosya Yükle</label>
+              <label><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>Veya Dosya Yükle</label>
               <input type="file" id="p-file" accept="image/*" style="padding: 8px; background: var(--bg-input); border: 1px solid var(--border-color); border-radius: var(--radius-sm); width: 100%; color: var(--text-secondary);" />
             </div>
             <div id="image-preview" style="margin-bottom: 16px;"></div>

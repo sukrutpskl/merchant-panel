@@ -15,13 +15,21 @@ import { renderReports } from './pages/reports.js';
 // ============================================
 
 const pageNames = {
-    dashboard: 'Dashboard',
+    dashboard: 'Ana Sayfa',
+    branches: 'Şubeler',
+    franchise: 'Franchise',
     products: 'Ürünler',
-    categories: 'Kategoriler',
+    categories: 'Ürün Ekle',
+    products_view: 'Ürün Görüntüle',
+    campaigns: 'Fırsat - Kampanyalar',
+    ads: 'İlan ve Reklam',
+    wholesale: 'Toptan',
+    reports: 'Analiz ve Raporlar',
+    'pizza-lazza': 'Pizza Lazza',
+    notifications: 'Bildirimler',
     orders: 'Siparişler',
     stock: 'Stok Yönetimi',
-    profile: 'Ayarlar',
-    reports: 'Raporlar'
+    profile: 'Ayarlar'
 };
 
 function init() {
@@ -79,8 +87,36 @@ function renderPage(page) {
 
     // Update active nav
     navItems.forEach(item => {
-        item.classList.toggle('active', item.dataset.page === page);
+        item.classList.remove('active');
     });
+    document.querySelectorAll('.submenu-item').forEach(item => {
+        item.classList.remove('active');
+    });
+
+    // Find the item that matches the current page
+    let activeItem = document.querySelector(`.nav-item[data-page="${page}"]`);
+    let activeSubItem = document.querySelector(`.submenu-item[data-page="${page}"]`);
+
+    if (activeSubItem) {
+        activeSubItem.classList.add('active');
+        // Find parent submenu
+        const submenu = activeSubItem.closest('.nav-submenu');
+        if (submenu) {
+            submenu.classList.add('open');
+            const parentKey = submenu.dataset.parent;
+            const parentItem = document.querySelector(`.nav-item[data-page="${parentKey}"]`);
+            if (parentItem) {
+                parentItem.classList.add('active', 'open');
+            }
+        }
+    } else if (activeItem) {
+        activeItem.classList.add('active');
+        if (activeItem.classList.contains('has-submenu')) {
+            activeItem.classList.add('open');
+            const submenu = document.querySelector(`.nav-submenu[data-parent="${page}"]`);
+            if (submenu) submenu.classList.add('open');
+        }
+    }
 
     // Update mobile title
     const mobileTitle = document.getElementById('mobile-title');
@@ -95,6 +131,7 @@ function renderPage(page) {
             renderDashboard(container);
             break;
         case 'products':
+        case 'products_view':
             renderProducts(container);
             break;
         case 'orders':
@@ -113,7 +150,7 @@ function renderPage(page) {
             renderReports(container);
             break;
         default:
-            renderDashboard(container);
+            container.innerHTML = `<div class="page-enter" style="padding:40px; text-align:center;"><h2>Yapım Aşamasında</h2><p>Bu sayfa henüz eklenmedi.</p></div>`;
             break;
     }
 }
@@ -276,6 +313,21 @@ function setupSidebar() {
     mobileMenuBtn?.addEventListener('click', toggleMobileSidebar);
     sidebarToggle?.addEventListener('click', closeMobileSidebar);
     overlay?.addEventListener('click', closeMobileSidebar);
+
+    // Submenu Toggle logic
+    document.querySelectorAll('.nav-item.has-submenu').forEach(item => {
+        item.addEventListener('click', (e) => {
+            const page = item.dataset.page;
+            const submenu = document.querySelector(`.nav-submenu[data-parent="${page}"]`);
+            if (submenu) {
+                submenu.classList.toggle('open');
+                item.classList.toggle('open');
+
+                // Optional: If we just want to toggle without changing page immediately when clicking the parent
+                // e.preventDefault(); 
+            }
+        });
+    });
 }
 
 function toggleMobileSidebar() {
@@ -309,6 +361,13 @@ function updateMerchantInfo() {
     if (statusEl) {
         statusEl.textContent = merchant.isOpen ? 'Açık' : 'Kapalı';
         statusEl.style.color = merchant.isOpen ? 'var(--accent-green)' : 'var(--accent-red)';
+    }
+
+    const navMerchantEl = document.getElementById('nav-merchant-name');
+    if (navMerchantEl && merchant.name) {
+        navMerchantEl.textContent = merchant.name;
+        // Also update page route name so mobile header says the right thing
+        pageNames['pizza-lazza'] = merchant.name;
     }
 }
 

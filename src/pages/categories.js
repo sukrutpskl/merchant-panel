@@ -42,21 +42,21 @@ export function renderCategories(container) {
         <div class="modal-body">
           <form id="category-form">
             <div class="form-group">
-              <label for="c-name">Kategori Adı *</label>
+              <label for="c-name"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>Kategori Adı *</label>
               <input type="text" id="c-name" required placeholder="Örn: İçecekler" />
             </div>
             <div class="form-group">
-              <label for="c-parent">Üst Kategori</label>
+              <label for="c-parent"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>Üst Kategori</label>
               <select id="c-parent">
                 <option value="">Ana Kategori (Yok)</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="c-desc">Açıklama</label>
+              <label for="c-desc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>Açıklama</label>
               <textarea id="c-desc" rows="3" placeholder="İsteğe bağlı açıklama"></textarea>
             </div>
             <div class="form-group">
-              <label for="c-image">Kategori Görseli *</label>
+              <label for="c-image"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>Kategori Görseli *</label>
               <input type="file" id="c-image-file" accept="image/*" />
               <div id="c-image-preview-container" style="display:none; margin-top:10px;">
                 <img id="c-image-preview" src="" alt="Önizleme" style="max-height: 100px; border-radius: 4px;" />
@@ -64,7 +64,7 @@ export function renderCategories(container) {
               <input type="hidden" id="c-image-url" />
             </div>
             <div class="form-group">
-              <label for="c-order">Sıra (Display Order)</label>
+              <label for="c-order"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px; vertical-align:middle;"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>Sıra (Display Order)</label>
               <input type="number" id="c-order" value="0" />
             </div>
           </form>
