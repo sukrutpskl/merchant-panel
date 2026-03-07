@@ -2,6 +2,7 @@ import { api } from '../api.js';
 import { showToast, escapeHtml } from '../utils.js';
 
 let categories = [];
+let editCategoryId = null;
 
 export function renderCategories(container) {
   container.innerHTML = `
@@ -78,6 +79,8 @@ export function renderCategories(container) {
 
 function setupCategoryEvents() {
   document.getElementById('add-category-btn').addEventListener('click', () => {
+    editCategoryId = null;
+    document.getElementById('cat-modal-title').textContent = 'Yeni Kategori Ekle';
     document.getElementById('category-form').reset();
     document.getElementById('category-modal').classList.add('active');
   });
@@ -103,8 +106,13 @@ function setupCategoryEvents() {
     }
 
     try {
-      await api.createCategory({ name, description, imageUrl, displayOrder, parentCategoryId });
-      showToast('Kategori başarıyla eklendi');
+      if (editCategoryId) {
+        await api.updateCategory(editCategoryId, { name, description, imageUrl, displayOrder, parentCategoryId });
+        showToast('Kategori başarıyla güncellendi');
+      } else {
+        await api.createCategory({ name, description, imageUrl, displayOrder, parentCategoryId });
+        showToast('Kategori başarıyla eklendi');
+      }
       closeModal();
       loadCategories();
     } catch (err) {
@@ -180,7 +188,8 @@ function renderCategoryTable() {
                 <strong>${escapeHtml(c.name)}</strong>
             </td>
             <td>${escapeHtml(c.description || '-')}</td>
-            <td style="width:120px;">
+            <td style="width:140px; display:flex; gap:8px;">
+              <button class="btn btn-sm btn-secondary edit-cat-btn" data-id="${c.id}">Düzenle</button>
               <button class="btn btn-sm btn-danger delete-cat-btn" data-id="${c.id}">Sil</button>
             </td>
           </tr>
@@ -201,6 +210,25 @@ function renderCategoryTable() {
       } catch (err) {
         showToast(err.message, 'error');
       }
+    });
+  });
+
+  // Edit events
+  el.querySelectorAll('.edit-cat-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = e.target.dataset.id;
+      const cat = categories.find(c => c.id === id);
+      if (!cat) return;
+
+      editCategoryId = id;
+      document.getElementById('cat-modal-title').textContent = 'Kategoriyi Düzenle';
+      document.getElementById('c-name').value = cat.name || '';
+      document.getElementById('c-parent').value = cat.parentCategoryId || '';
+      document.getElementById('c-desc').value = cat.description || '';
+      document.getElementById('c-image').value = cat.imageUrl || '';
+      document.getElementById('c-order').value = cat.displayOrder || 0;
+
+      document.getElementById('category-modal').classList.add('active');
     });
   });
 }

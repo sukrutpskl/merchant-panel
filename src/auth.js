@@ -49,7 +49,6 @@ export function getUser() {
 export function setUser(user) {
     localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(user));
 }
-
 export function isAuthenticated() {
     return !!getToken();
 }

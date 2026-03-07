@@ -3,6 +3,8 @@ import { formatCurrency, showToast, debounce, escapeHtml, placeholderSvg } from 
 
 let categories = [];
 let currentPage = 1;
+let editProductId = null;
+let currentProducts = [];
 
 export function renderProducts(container) {
   container.innerHTML = `
@@ -98,7 +100,8 @@ export function renderProducts(container) {
 function setupProductEvents() {
   // Add product button
   document.getElementById('add-product-btn').addEventListener('click', () => {
-    openModal();
+    editProductId = null;
+    openModal(false);
   });
 
   // Modal close/cancel
@@ -138,9 +141,12 @@ function setupProductEvents() {
   });
 }
 
-function openModal() {
-  document.getElementById('product-form').reset();
-  document.getElementById('image-preview').innerHTML = '';
+function openModal(isEdit = false) {
+  if (!isEdit) {
+    document.getElementById('product-form').reset();
+    document.getElementById('image-preview').innerHTML = '';
+    document.getElementById('modal-title').textContent = 'Yeni Ürün Ekle';
+  }
   // Process categories into hierarchy
   const hierarchy = formatCategoryHierarchy(categories);
 
@@ -201,8 +207,8 @@ async function loadProducts() {
   try {
     const res = await api.getProducts({ search, categoryId, page: currentPage, pageSize: 20 });
     console.log('Products API response:', res);
-    const products = Array.isArray(res) ? res : (Array.isArray(res?.data) ? res.data : []);
-    renderProductGrid(container, products);
+    currentProducts = Array.isArray(res) ? res : (Array.isArray(res?.data) ? res.data : []);
+    renderProductGrid(container, currentProducts);
   } catch (err) {
     container.innerHTML = `
       <div class="empty-state">
@@ -248,8 +254,8 @@ function renderProductGrid(container, products) {
               </div>
             </div>
             <div style="margin-top: 12px; display: flex; gap: 8px;">
-              <button class="btn btn-sm btn-secondary" disabled title="API tarafından desteklenmiyor" style="flex:1; opacity:0.6; cursor:not-allowed;">Düzenle</button>
-              <button class="btn btn-sm btn-danger" disabled title="API tarafından desteklenmiyor" style="flex:1; opacity:0.6; cursor:not-allowed;">Sil</button>
+              <button class="btn btn-sm btn-secondary edit-product-btn" data-id="${p.id}" style="flex:1;">Düzenle</button>
+              <button class="btn btn-sm btn-danger delete-product-btn" data-id="${p.id}" style="flex:1;">Sil</button>
             </div>
           </div>
         </div>
@@ -269,6 +275,45 @@ function renderProductGrid(container, products) {
       } catch (err) {
         showToast(err.message, 'error');
         e.target.checked = !isAvailable;
+      }
+    });
+  });
+
+  // Delete events
+  container.querySelectorAll('.delete-product-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      if (!confirm('Bu ürünü silmek istediğinize emin misiniz?')) return;
+      const id = e.target.dataset.id;
+      try {
+        await api.deleteProduct(id);
+        showToast('Ürün silindi');
+        loadProducts();
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+  });
+
+  // Edit events
+  container.querySelectorAll('.edit-product-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const id = e.target.dataset.id;
+      const product = currentProducts.find(p => p.id === id);
+      if (!product) return;
+
+      editProductId = id;
+      openModal(true);
+      document.getElementById('modal-title').textContent = 'Ürünü Düzenle';
+      document.getElementById('p-name').value = product.name || '';
+      document.getElementById('p-desc').value = product.description || '';
+      document.getElementById('p-price').value = product.price || '';
+      document.getElementById('p-category').value = product.categoryId || '';
+      document.getElementById('p-image').value = product.imageUrl || '';
+      document.getElementById('p-file').value = '';
+      if (product.imageUrl) {
+        document.getElementById('image-preview').innerHTML = `
+          <img src="${escapeHtml(product.imageUrl)}" style="max-width: 100%; max-height: 150px; border-radius: var(--radius-sm); object-fit: cover;" />
+        `;
       }
     });
   });
@@ -317,8 +362,13 @@ async function saveProduct() {
       optionGroups: [],
     };
 
-    await api.createProduct(productData);
-    showToast('Ürün başarıyla eklendi');
+    if (editProductId) {
+      await api.updateProduct(editProductId, productData);
+      showToast('Ürün başarıyla güncellendi');
+    } else {
+      await api.createProduct(productData);
+      showToast('Ürün başarıyla eklendi');
+    }
     closeModal();
     loadProducts();
   } catch (err) {

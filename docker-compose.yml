@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: .
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_BASE=/api
+    depends_on:
+      - mock-api
+
+  mock-api:
+    image: stoplight/prism:5
+    command: mock -h 0.0.0.0 -p 4010 /tmp/swagger.json
+    ports:
+      - "4010:4010"
+    volumes:
+      - ./swagger.json:/tmp/swagger.json:ro

@@ -193,6 +193,19 @@ export const api = {
         });
     },
 
+    updateProduct(id, data) {
+        return request(`/api/merchant/products/${id}`, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+        });
+    },
+
+    deleteProduct(id) {
+        return request(`/api/merchant/products/${id}`, {
+            method: 'DELETE',
+        });
+    },
+
     updateProductAvailability(id, isAvailable) {
         return request(`/api/merchant/products/${id}/availability`, {
             method: 'PUT',
@@ -214,6 +227,13 @@ export const api = {
         // data can include { name, description, displayOrder, parentCategoryId }
         return request('/api/merchant/menu/categories', {
             method: 'POST',
+            body: JSON.stringify(data),
+        });
+    },
+
+    updateCategory(categoryId, data) {
+        return request(`/api/merchant/menu/categories/${categoryId}`, {
+            method: 'PUT',
             body: JSON.stringify(data),
         });
     },
