@@ -192,64 +192,27 @@ img {
 }
 
 .hero-content {
-  max-width: 500px;
+  max-width: 600px;
+  /* Increased slightly for better layout */
   text-align: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   height: 100%;
   width: 100%;
 }
 
-.main-logo-row {
+.hero-main-center {
+  flex-grow: 1;
   display: flex;
-  align-items: flex-end;
-  gap: 15px;
-  position: relative;
+  align-items: center;
+  justify-content: center;
 }
 
-.brand-logo {
-  height: 120px;
-}
-
-.logo-slogan-box {
-  border: 1.5px solid #1e3a8a;
-  background: white;
-  padding: 8px 12px;
-  border-radius: 4px;
-  transform: rotate(-3deg);
-  position: relative;
-  top: -20px;
-}
-
-.slogan-text-top {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #1e3a8a;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
-.slogan-text-main {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #1e3a8a;
-  line-height: 0.9;
-}
-
-.curved-arrow {
-  position: absolute;
-  bottom: -15px;
-  right: -40px;
-  pointer-events: none;
-}
-
-.logo-url {
-  font-size: 2.2rem;
-  color: #1e3a8a;
-  font-weight: 300;
-  margin-top: 5px;
-  letter-spacing: 1px;
+.hero-composite-logo {
+  max-width: 100%;
+  height: auto;
+  max-height: 220px;
+  object-fit: contain;
 }
 
 .hero-lower-content {
