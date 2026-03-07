@@ -165,18 +165,6 @@ function setupLoginForm() {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const email = document.getElementById('login-email').value.trim();
-        const password = document.getElementById('login-password').value;
-        const errorEl = document.getElementById('login-error');
-        const btn = document.getElementById('login-btn');
-        const btnText = btn.querySelector('.btn-text');
-        const btnLoader = btn.querySelector('.btn-loader');
-
-        errorEl.classList.add('hidden');
-        btnText.classList.add('hidden');
-        btnLoader.classList.remove('hidden');
-        btn.disabled = true;
-
         try {
             const res = await api.login(email, password);
 
@@ -208,14 +196,14 @@ function setupLoginForm() {
         e.preventDefault();
         document.getElementById('login-form').classList.add('hidden');
         document.getElementById('register-form').classList.remove('hidden');
-        document.querySelector('.login-header p').textContent = 'Yeni bir mağaza hesabı oluşturun';
+        document.querySelector('.welcome-text-top').textContent = 'Yeni bir mağaza hesabı oluşturun';
     });
 
     document.getElementById('go-to-login').addEventListener('click', (e) => {
         e.preventDefault();
         document.getElementById('register-form').classList.add('hidden');
         document.getElementById('login-form').classList.remove('hidden');
-        document.querySelector('.login-header p').textContent = 'Mağazanızı yönetmek için giriş yapın';
+        document.querySelector('.welcome-text-top').textContent = "Kurumsal Panel'e Hoş Geldiniz!";
     });
 }
 
