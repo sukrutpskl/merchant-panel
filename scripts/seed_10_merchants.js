@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 const API_BASE = 'http://localhost:8080';
-const password = 'Password123!';
+const password = 'Deneme123';
 
 const merchantTemplates = [
     {
@@ -107,9 +107,8 @@ async function request(path, options = {}, token = null) {
 }
 
 async function seedMerchant(template, index) {
-    const batchId = 'batch' + Math.floor(Date.now() / 100000).toString().slice(-4);
-    const email = `test_${(index + 1)}_${batchId}@nedunet.com`;
-    const phone = `555${batchId}${(index + 1).toString().padStart(2, '0')}`.substring(0, 10);
+    const email = `test_${index + 1}@nedubu.com.tr`;
+    const phone = `50000000${(index + 1).toString().padStart(2, '0')}`;
 
     console.log(`\n--- Seeding Merchant ${index + 1}: ${template.name} ---`);
     console.log(`Email: ${email} | Phone: ${phone}`);
