@@ -237,7 +237,7 @@ function renderProductGrid(container, products) {
         <div class="product-card">
           <div class="product-image">
             ${p.imageUrl
-      ? `<img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.name)}" onerror="this.parentElement.innerHTML='${placeholderSvg()}'"/>`
+      ? `<img src="${escapeHtml(p.imageUrl)}" alt="${escapeHtml(p.name)}" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=300&auto=format&fit=crop'"/>`
       : placeholderSvg()}
           </div>
           <div class="product-body">

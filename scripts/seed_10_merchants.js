@@ -188,6 +188,58 @@ async function seedMerchant(template, index) {
 
             for (const pName of cat.products) {
                 const price = Math.floor(Math.random() * 450) + 50;
+                // Generate a high quality Unsplash keyword based on product name
+                const keyword = pName.toLowerCase().replace(/ /g, ',');
+                const imageUrl = `https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800&auto=format&fit=crop&sig=${Math.random()}`;
+
+                // Fine-tuning keywords for better Unsplash results
+                let query = pName;
+                if (template.name.includes('Restoran')) query = `food,${pName}`;
+                if (template.name.includes('Tekno')) query = `tech, electronics,${pName}`;
+                if (template.name.includes('Moda')) query = `fashion,clothes,${pName}`;
+                if (template.name.includes('Market')) query = `grocery,fresh,${pName}`;
+                if (template.name.includes('Kitap')) query = `book,stationery,${pName}`;
+                if (template.name.includes('Çiçekçi')) query = `flowers,bouquet,${pName}`;
+                if (template.name.includes('Sporcu')) query = `fitness,sports,equipment,${pName}`;
+                if (template.name.includes('Evim')) query = `home,decor,furniture,${pName}`;
+                if (template.name.includes('Petshop')) query = `pet,dog,cat,${pName}`;
+                if (template.name.includes('Güzellik')) query = `beauty,cosmetics,makeup,${pName}`;
+
+                // Using a more reliable way to get themed images without source.unsplash.com
+                const themeKeywords = {
+                    'Restoran': 'food,restaurant,meal',
+                    'Tekno': 'electronics,gadget,technology',
+                    'Moda': 'fashion,clothing,apparel',
+                    'Market': 'grocery,vegetables,fruits',
+                    'Kitap': 'book,library,reading',
+                    'Çiçekçi': 'flowers,bouquet,nature',
+                    'Sporcu': 'fitness,gym,workout',
+                    'Evim': 'home,interior,living',
+                    'Petshop': 'pets,dog,cat',
+                    'Güzellik': 'cosmetics,beauty,skincare'
+                };
+
+                let themeKey = Object.keys(themeKeywords).find(k => template.name.includes(k)) || 'product';
+                const finalDynamicUrl = `https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop`; // High quality generic product as base fallback
+
+                // Fallback to a set of curated Unsplash IDs for reliability
+                const curatedImages = {
+                    'Mercimek Çorbası': 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&q=80&w=800',
+                    'Kuru Fasulye': 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&q=80&w=800',
+                    'Laptop Pro 14': 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&q=80&w=800',
+                    'SmartPhone X': 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&q=80&w=800',
+                    'Yazlık Elbise': 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800',
+                    'Domates (Kg)': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800',
+                    'Dünya Klasikleri Seti': 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=800',
+                    'Gül Buketi': 'https://images.unsplash.com/photo-1561181286-d3fee7d55230?auto=format&fit=crop&q=80&w=800',
+                    'Dambıl Seti': 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=800',
+                    'Granit Tencere': 'https://images.unsplash.com/photo-1584990333910-fe905206336e?auto=format&fit=crop&q=80&w=800',
+                    'Yetişkin Kedi Maması': 'https://images.unsplash.com/photo-1589924691106-03fc7af193f4?auto=format&fit=crop&q=80&w=800',
+                    'Nemlendirici Krem': 'https://images.unsplash.com/photo-1556228578-8cff4284bcda?auto=format&fit=crop&q=80&w=800'
+                };
+
+                const finalImageUrl = curatedImages[pName] || `https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop`;
+
                 await request('/api/merchant/products', {
                     method: 'POST',
                     body: JSON.stringify({
@@ -195,7 +247,7 @@ async function seedMerchant(template, index) {
                         description: `${pName} için harika bir açıklama.`,
                         price: price,
                         categoryId: catId,
-                        imageUrl: 'https://via.placeholder.com/300',
+                        imageUrl: finalImageUrl,
                         variants: [{ name: 'Standart', price: price, stock: 99 }]
                     })
                 }, merchToken);
