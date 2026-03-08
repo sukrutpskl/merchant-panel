@@ -31,44 +31,48 @@ const productDetails = {
     'Double Whopper': { desc: 'İki kat dana eti, bol peynir, devasa doyuruculuk ve közlenmiş biber aroması.', img: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?q=80&w=800' },
     'Patates Kızartması': { desc: 'Taze kesim patatesler, özel baharat karışımı ve çıtır doku.', img: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?q=80&w=800' },
     'Soğan Halkası': { desc: 'Dışı çıtır pane, içi sulu tatlı soğan halkaları (8 adet).', img: 'https://images.unsplash.com/photo-1639024471283-03518883512d?q=80&w=800' },
-    'Margarita': { desc: 'Mozerella peyniri, taze fesleğen ve özel domates soslu ince hamur pizza.', img: 'https://images.unsplash.com/photo-1574071318508-1cdbad80ad50?q=80&w=800' },
-    'Karışık Pizza': { desc: 'Sucuk, salam, mısır, zeytin, biber ve mantar ile zengin içerikli.', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=800' },
-    'Pepperoni': { desc: 'Bol pepperoni dilimleri ve uzayan mozerella peyniri.', img: 'https://images.unsplash.com/photo-1628840042765-356cda07504e?q=80&w=800' },
-    'Adana Kebap': { desc: 'Zırhla çekilmiş kuzu eti, közlenmiş domates ve biber eşliğinde klasik lezzet.', img: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?q=80&w=800' },
-    'Urfa Kebap': { desc: 'Acısız kuzu kıyma, yanında bulgur pilavı ve sumaklı soğan salatası ile.', img: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800' },
-    'Beyti': { desc: 'Lavaş içine sarılmış kebap, üzerinde yoğurt ve özel tereyağlı sos ile.', img: 'https://images.unsplash.com/photo-1625938140722-23151fa1642c?q=80&w=800' },
-    'Et Döner Dürüm': { desc: 'Lavaş ekmeğine sarılı 100gr yaprak döner, patates kızartması ve özel sos.', img: 'https://images.unsplash.com/photo-1561651823-34feb02250e4?q=80&w=800' },
-    'Tavuk Döner': { desc: 'Özel marine edilmiş tavuk but etinden, çıtır dürüm içinde.', img: 'https://images.unsplash.com/photo-1633321702518-7feccafacbc8?q=80&w=800' },
-    'Baklava': { desc: 'Antep fıstığı, ince yufka ve tereyağı ile hazırlanan geleneksel lezzet.', img: 'https://images.unsplash.com/photo-1519676867240-f03562e6fa1d?q=80&w=800' },
-    'Sütlaç': { desc: 'Fırınlanmış, bol sütlü ve pirinçli geleneksel sütlü tatlı.', img: 'https://images.unsplash.com/photo-1621251322961-0aa7f3954602?q=80&w=800' },
-    'Künefe': { desc: 'Peynirli, sıcak şerbetli ve Antep fıstıklı meşhur Hatay tatlısı.', img: 'https://images.unsplash.com/photo-1510130335024-115377b3bd31?q=80&w=800' },
-    'Maraş Dondurması': { desc: 'Hakiki keçi sütü ve salep ile hazırlanan dövme dondurma.', img: 'https://images.unsplash.com/photo-1563214811-1372551e5f8f?q=80&w=800' },
+    'Margarita': { desc: 'Mozerella peyniri, taze fesleğen ve özel domates soslu ince hamur pizza.', img: '/uploads/b21c41ad-111e-446a-8db6-d85a6620857d.png' },
+    'Karışık Pizza': { desc: 'Sucuk, salam, mısır, zeytin, biber ve mantar ile zengin içerikli.', img: '/uploads/56d2502c-f4d2-4d93-a3cc-7f97919bab10.png' },
+    'Pepperoni': { desc: 'Bol pepperoni dilimleri ve uzayan mozerella peyniri.', img: '/uploads/2aef3ca8-b86a-40d4-9cc9-32fbf8ae8790.png' },
+    'Adana Kebap': { desc: 'Zırhla çekilmiş kuzu eti, közlenmiş domates ve biber eşliğinde klasik lezzet.', img: '/uploads/4dd6d42f-1226-489e-9ee2-9e19e8b24514.png' },
+    'Urfa Kebap': { desc: 'Acısız kuzu kıyma, yanında bulgur pilavı ve sumaklı soğan salatası ile.', img: '/uploads/4dd6d42f-1226-489e-9ee2-9e19e8b24514.png' },
+    'Beyti': { desc: 'Lavaş içine sarılmış kebap, üzerinde yoğurt ve özel tereyağlı sos ile.', img: '/uploads/4dd6d42f-1226-489e-9ee2-9e19e8b24514.png' },
+    'Et Döner Dürüm': { desc: 'Lavaş ekmeğine sarılı 100gr yaprak döner, patates kızartması ve özel sos.', img: '/uploads/ef680221-2bfc-4337-bf21-3b4020ad9df7.png' },
+    'Tavuk Döner': { desc: 'Özel marine edilmiş tavuk but etinden, çıtır dürüm içinde.', img: '/uploads/ef680221-2bfc-4337-bf21-3b4020ad9df7.png' },
+    'Baklava': { desc: 'Antep fıstığı, ince yufka ve tereyağı ile hazırlanan geleneksel lezzet.', img: '/uploads/6c3ec9c3-f3ff-4f25-a563-f34dc0f16948.png' },
+    'Sütlaç': { desc: 'Fırınlanmış, bol sütlü ve pirinçli geleneksel sütlü tatlı.', img: 'https://images.unsplash.com/photo-1589113331518-910bbd8a7c64?q=80&w=800' },
+    'Künefe': { desc: 'Peynirli, sıcak şerbetli ve Antep fıstıklı meşhur Hatay tatlısı.', img: 'https://images.unsplash.com/photo-1608835291093-394b0c943a75?q=80&w=800' },
+    'Maraş Dondurması': { desc: 'Hakiki keçi sütü ve salep ile hazırlanan dövme dondurma.', img: '/uploads/2bb09dd8-abba-4003-b23f-9a3bbf382fec.png' },
     'Izgara Çipura': { desc: 'Denizden taze, kömür ateşinde ızgara edilmiş çipura, mevsim salata ile.', img: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800' },
     'Kalamar Tava': { desc: 'Çıtır pane yapılmış taze kalamar halkaları ve tarator sos.', img: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?q=80&w=800' },
-    'Mevsim Salata': { desc: 'Taze marul, domates, salatalık ve mısır ile hazırlanan klasik salata.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=800' },
-    'Gavurdağı': { desc: 'İnce kıyılmış domates, biber, ceviz ve nar ekşili özel Antep salatası.', img: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?q=80&w=800' },
+    'Mevsim Salata': { desc: 'Taze marul, domates, salatalık ve mısır ile hazırlanan klasik salata.', img: '/uploads/98250887-61ef-4d50-99e1-a9c3bb1df420.png' },
+    'Gavurdağı': { desc: 'İnce kıyılmış domates, biber, ceviz ve nar ekşili özel Antep salatası.', img: '/uploads/98250887-61ef-4d50-99e1-a9c3bb1df420.png' },
     'Kola 330ml': { desc: 'Soğuk servis edilen klasik ferahlatıcı lezzet.', img: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?q=80&w=800' },
     'Ayran': { desc: 'Tam yağlı yoğurttan geleneksel yöntemlerle hazırlanan serinletici içecek.', img: 'https://images.unsplash.com/photo-1626074353765-517a631e5967?q=80&w=800' },
     'Su': { desc: 'Doğal kaynak suyu, 500ml.', img: 'https://images.unsplash.com/photo-1523362628742-0c29a4519d6d?q=80&w=800' },
 
     // Kozmetik
-    'Mat Ruj': { desc: 'Uzun süre kalıcı mat doku, dudak kurutmayan nemlendirici formül.', img: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?q=80&w=800' },
-    'Fondöten': { desc: 'Yüksek kapatıcılık, doğal bitiş ve 24 saat dayanıklılık sağlayan likit yapı.', img: 'https://images.unsplash.com/photo-1596704017254-9b52ffb0ed83?q=80&w=800' },
-    'Eyeliner': { desc: 'Ultra siyah, suya dayanıklı ve ince uçlu aplikatörü ile hatasız uygulama.', img: 'https://images.unsplash.com/photo-1631214500115-598fc2cb8d2d?q=80&w=800' },
-    'Maskara': { desc: 'Hacim veren ve kıvıran özel fırçasıyla dramatik bakışlar.', img: 'https://images.unsplash.com/photo-1591360236660-7db410cdeb75?q=80&w=800' },
-    'Nemlendirici Krem': { desc: 'Cildin nem dengesini koruyan, E vitamini özlü günlük bakım kremi.', img: 'https://images.unsplash.com/photo-1620916566398-39f0ef0aeb6c?q=80&w=800' },
-    'Yüz Temizleme Jeli': { desc: 'Hassas ciltler için uygun, gözenekleri derinlemesine temizleyen PH dengeli jel.', img: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=800' },
-    'Güneş Kremi': { desc: '50+ SPF koruma faktörlü, yağsız ve leke karşıtı güneş koruyucu.', img: 'https://images.unsplash.com/photo-1521223344201-d169129f7b7d?q=80&w=800' },
-    'Besleyici Şampuan': { desc: 'Keratin ve argan yağı içerikli, yorgun saçlar için onarıcı bakım.', img: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?q=80&w=800' },
-    'Saç Kremi': { desc: 'Argan yağı ve ipek proteini ile zenginleştirilmiş, kolay tarama sağlayan besleyici krem.', img: 'https://images.unsplash.com/photo-1599305090598-fe179d501c27?q=80&w=800' },
-    'Bakım Yağı': { desc: '7 doğal yağ içeren, saç ve tırnaklar için mucizevi onarıcı bakım kompleksi.', img: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=800' },
-    'EDP Kadın Parfümü': { desc: 'Çiçeksi ve odunsu notalar, gün boyu kalıcı büyüleyici koku.', img: 'https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=800' },
-    'EDT Erkek Parfümü': { desc: 'Ferah okyanus notaları ve maskülen bitişli günlük parfüm.', img: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=800' },
-    'Diş Fırçası': { desc: 'Yumuşak kıllı, diş etlerine zarar vermeyen ergonomik fırça yapısı.', img: 'https://images.unsplash.com/photo-1559591937-e3b2af943ea9?q=80&w=800' },
-    'Deodorant': { desc: '24 saat koruma sağlayan, pudralı ve taze kokulu antiperspirant sprey.', img: 'https://images.unsplash.com/photo-1594412217573-047ceb485295?q=80&w=800' }
+    'Mat Ruj': { desc: 'Uzun süre kalıcı mat doku, dudak kurutmayan nemlendirici formül.', img: '/uploads/499b4dfd-08c0-49e6-925a-06abc8d41691.png' },
+    'Fondöten': { desc: 'Yüksek kapatıcılık, doğal bitiş ve 24 saat dayanıklılık sağlayan likit yapı.', img: '/uploads/1c567750-1f05-4975-a65b-ee24728b634f.png' },
+    'Eyeliner': { desc: 'Ultra siyah, suya dayanıklı ve ince uçlu aplikatörü ile hatasız uygulama.', img: '/uploads/f93b5239-3618-43ab-8267-1798958edcd8.png' },
+    'Maskara': { desc: 'Hacim veren ve kıvıran özel fırçasıyla dramatik bakışlar.', img: '/uploads/524bf12c-5056-4433-bc6c-47a3b292a177.png' },
+    'Nemlendirici Krem': { desc: 'Cildin nem dengesini koruyan, E vitamini özlü günlük bakım kremi.', img: '/uploads/15238a03-4ba8-4f22-9bce-c584274b76a6.png' },
+    'Yüz Temizleme Jeli': { desc: 'Hassas ciltler için uygun, gözenekleri derinlemesine temizleyen PH dengeli jel.', img: '/uploads/f965b02a-9c90-42a1-9c0f-4d89e66992ee.png' },
+    'Güneş Kremi': { desc: '50+ SPF koruma faktörlü, yağsız ve leke karşıtı güneş koruyucu.', img: '/uploads/38738970-dade-4469-96d1-831d3ee6f624.png' },
+    'Besleyici Şampuan': { desc: 'Keratin ve argan yağı içerikli, yorgun saçlar için onarıcı bakım.', img: '/uploads/5739ab56-374a-4962-9077-806b2c72f6df.png' },
+    'Saç Kremi': { desc: 'Argan yağı ve ipek proteini ile zenginleştirilmiş, kolay tarama sağlayan besleyici krem.', img: '/uploads/2900c9d7-4051-4720-8a9c-8e3ed2efa1ed.png' },
+    'Bakım Yağı': { desc: '7 doğal yağ içeren, saç ve tırnaklar için mucizevi onarıcı bakım kompleksi.', img: '/uploads/35b474a6-120a-4122-aeee-7741a5a5c365.png' },
+    'EDP Kadın Parfümü': { desc: 'Çiçeksi ve odunsu notalar, gün boyu kalıcı büyüleyici koku.', img: '/uploads/11c9d61e-9e3f-4d15-b7a9-6d8c48c6482c.png' },
+    'EDT Erkek Parfümü': { desc: 'Ferah okyanus notaları ve maskülen bitişli günlük parfüm.', img: '/uploads/cb5ff95e-bfbc-446b-ae91-ccb539a6bdd3.png' },
+    'Diş Fırçası': { desc: 'Yumuşak kıllı, diş etlerine zarar vermeyen ergonomik fırça yapısı.', img: '/uploads/cec4bfb4-cfea-40c5-8a92-d42fd771075c.png' },
+    'Deodorant': { desc: '24 saat koruma sağlayan, pudralı ve taze kokulu antiperspirant sprey.', img: '/uploads/70c9c327-1c56-4094-81fd-2e5a6d5191cd.png' }
 };
 
-const genericFallback = (name, type) => `https://images.unsplash.com/featured/800x600?${encodeURIComponent(type + ',' + name)}&sig=${Math.random()}`;
+const genericFallback = (name, type) => {
+    const isCosmetic = ['Kozmetik', 'Makyaj', 'Cilt Bakımı', 'Saç Bakımı', 'Parfüm', 'Kişisel Bakım'].includes(type);
+    const keywords = isCosmetic ? `cosmetic,beauty,${name}` : `food,restaurant,${name}`;
+    return `https://images.unsplash.com/featured/800x600?${encodeURIComponent(keywords)}&sig=${Math.random()}`;
+};
 
 async function request(path, options = {}, token = null) {
     const url = `${API_BASE}${path}`;
@@ -204,13 +208,13 @@ async function seed(merch) {
                     img: `https://images.unsplash.com/photo-1546069901-ba9599a7e63c?q=80&w=800` // Default to a neutral item if not found
                 };
 
-                // Eğer hala detay bulunamadıysa ( fallback durumunda gıda resmi yerine nötr bir görsel )
+                // Eğer hala detay bulunamadıysa ( fallback durumunda gıda resmi yerine türe uygun bir görsel )
                 if (!productDetails[pName]) {
-                    details.img = `https://images.unsplash.com/photo-1583947215259-38e31be8751f?q=80&w=800`; // Nötr/Paket görseli
+                    details.img = genericFallback(pName, merch.type === 'Kozmetik' ? 'Kozmetik' : 'Gıda');
                 }
 
                 const price = 150 + Math.floor(Math.random() * 500);
-                await request('/api/merchant/products', {
+                const pRes = await request('/api/merchant/products', {
                     method: 'POST',
                     body: JSON.stringify({
                         name: pName,
@@ -221,6 +225,11 @@ async function seed(merch) {
                         variants: [{ name: 'Standart', price: price, stock: 100 }]
                     })
                 }, mToken);
+                if (pRes.status !== 200) {
+                    console.error(`    [!] Ürün oluşturma hatası (${pName}):`, pRes.data);
+                } else {
+                    console.log(`    [OK] Ürün oluşturuldu: ${pName}`);
+                }
             }
         }
     }

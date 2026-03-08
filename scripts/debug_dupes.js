@@ -20,12 +20,13 @@ async function debugMerchant(email) {
     });
     const token = loginRes.data?.data?.accessToken;
     if (!token) {
-        console.error(`Login failed for ${email}`);
+        console.error(`Login failed for ${email}:`, loginRes.data);
         return;
     }
 
     const catsRes = await request('/api/merchant/menu/categories', {}, token);
     console.log(`Categories found: ${catsRes.data?.data?.length || 0}`);
+    if (catsRes.status !== 200) console.error('Cats Error:', catsRes.data);
     if (Array.isArray(catsRes.data?.data)) {
         catsRes.data.data.forEach(c => {
             console.log(`- ID: ${c.id} | Name: ${c.name} | Deleted: ${c.isDeleted}`);
@@ -34,15 +35,17 @@ async function debugMerchant(email) {
 
     const productsRes = await request('/api/merchant/products?pageSize=100', {}, token);
     console.log(`Products found: ${productsRes.data?.data?.length || 0}`);
+    if (productsRes.status !== 200) console.error('Products Error:', productsRes.data);
     if (Array.isArray(productsRes.data?.data)) {
         productsRes.data.data.forEach(p => {
-            console.log(`- ID: ${p.id} | Name: ${p.name} | Img: ${p.imageUrl} | Desc: ${p.description.substring(0, 30)}...`);
+            console.log(`- ID: ${p.id} | Name: ${p.name} | Img: ${p.imageUrl} | Desc: ${p.description?.substring(0, 30)}...`);
         });
     }
 }
 
 async function run() {
-    await debugMerchant('rossmann@nedubu.com.tr');
+    await debugMerchant('kebap@nedubu.com.tr');
+    await debugMerchant('tatli@nedubu.com.tr');
 }
 
 run();
