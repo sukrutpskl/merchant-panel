@@ -4,16 +4,96 @@ const API_BASE = 'http://localhost:8080';
 const password = 'Password123!';
 
 const merchantTemplates = [
-    { name: 'Lezzet Durağı Restoran', category: 'Yemek', desc: 'Ev yemekleri ve sulu yemekler' },
-    { name: 'Tekno Market', category: 'Elektronik', desc: 'Bilgisayar ve yan ürünler' },
-    { name: 'Moda Dünyası', category: 'Giyim', desc: 'Trend kıyafetler ve aksesuarlar' },
-    { name: 'Yeşil Market', category: 'Market', desc: 'Taze sebze ve meyve' },
-    { name: 'Kitap Kurdu', category: 'Kitap', desc: 'Yeni çıkanlar ve klasikler' },
-    { name: 'Mis Kokulu Çiçekçi', category: 'Çiçek', desc: 'Canlı ve yapay çiçek aranjmanları' },
-    { name: 'Sporcu Dostu', category: 'Spor', desc: 'Spor aletleri ve giyimi' },
-    { name: 'Evim Güzel Evim', category: 'Ev & Yaşam', desc: 'Dekorasyon ve mutfak gereçleri' },
-    { name: 'Minik Dostlar Petshop', category: 'Evcil Hayvan', desc: 'Mama ve evcil hayvan aksesuarları' },
-    { name: 'Güzellik Atölyesi', category: 'Kozmetik', desc: 'Makyaj ve cilt bakım ürünleri' }
+    {
+        name: 'Lezzet Durağı Restoran',
+        desc: 'Geleneksel Türk mutfağının en seçkin lezzetleri.',
+        categories: [
+            { name: 'Sulu Yemekler', products: ['Kuru Fasulye', 'İçli Köfte', 'Tas Kebabı', 'Kuzu Tandır'] },
+            { name: 'Çorbalar', products: ['Mercimek Çorbası', 'Ezogelin', 'Yayla Çorbası'] },
+            { name: 'Tatlılar', products: ['Sütlaç', 'Baklava', 'Künefe'] }
+        ]
+    },
+    {
+        name: 'Tekno Market',
+        desc: 'Son teknoloji cihazlar ve aksesuarlar.',
+        categories: [
+            { name: 'Bilgisayar', products: ['Laptop Pro 14', 'Oyuncu Bilgisayarı', 'Gamer Mouse', 'Mekanik Klavye'] },
+            { name: 'Aksesuar', products: ['Bluetooth Kulaklık', 'Type-C Hub', 'Taşınabilir Disk'] },
+            { name: 'Telefon', products: ['SmartPhone X', 'Hızlı Şarj Adaptörü'] }
+        ]
+    },
+    {
+        name: 'Moda Dünyası',
+        desc: 'Her mevsime uygun şık tasarım kıyafetler.',
+        categories: [
+            { name: 'Kadın Giyim', products: ['Yazlık Elbise', 'Ceket', 'Saten Gömlek', 'Jean Pantolon'] },
+            { name: 'Erkek Giyim', products: ['Slim Fit Gömlek', 'Keten Pantolon', 'Spor Ceket'] },
+            { name: 'Aksesuar', products: ['Güneş Gözlüğü', 'Deri Kemer'] }
+        ]
+    },
+    {
+        name: 'Yeşil Market',
+        desc: 'Taze, organik ve yerel market ürünleri.',
+        categories: [
+            { name: 'Sebze', products: ['Domates (Kg)', 'Salatalık (Kg)', 'Marul', 'Patates (Kg)'] },
+            { name: 'Meyve', products: ['Elma Starking', 'Muz Anamur', 'Çilek'] },
+            { name: 'Süt Ürünleri', products: ['Tam Yağlı Süt', 'Beyaz Peynir', 'Yoğurt 2Kg'] }
+        ]
+    },
+    {
+        name: 'Kitap Kurdu',
+        desc: 'Binlerce kitap ve kırtasiye ürünü bir arada.',
+        categories: [
+            { name: 'Edebiyat', products: ['Dünya Klasikleri Seti', 'Modern Roman', 'Şiir Antolojisi'] },
+            { name: 'Kırtasiye', products: ['Defter 96 Yaprak', 'Dolma Kalem', 'Boyama Seti'] },
+            { name: 'Hobi', products: ['1000 Parça Puzzle', 'Akrilik Boya'] }
+        ]
+    },
+    {
+        name: 'Mis Kokulu Çiçekçi',
+        desc: 'En özel anlarınız için taze çiçek tasarımları.',
+        categories: [
+            { name: 'Buketler', products: ['Gül Buketi', 'Papatya Aşkı', 'Karışık Mevsim Çiçeği'] },
+            { name: 'Saksı Çiçekleri', products: ['Orkide', 'Aloe Vera', 'Paşa Kılıcı'] },
+            { name: 'Aranjman', products: ['Cam Vazo Tasarımı', 'Kutuda Çiçek'] }
+        ]
+    },
+    {
+        name: 'Sporcu Dostu',
+        desc: 'Profesyonel spor ekipmanları ve giyimi.',
+        categories: [
+            { name: 'Fitness', products: ['Dambıl Seti', 'Mat', 'Ağırlık Eldiveni', 'Antreman Bandı'] },
+            { name: 'Giyim', products: ['Dry-Fit Tişört', 'Tayt', 'Koşu Ayakkabısı'] },
+            { name: 'Besin Takviyesi', products: ['Protein Tozu', 'BCAA'] }
+        ]
+    },
+    {
+        name: 'Evim Güzel Evim',
+        desc: 'Eviniz için dekoratif ve pratik çözümler.',
+        categories: [
+            { name: 'Mutfak', products: ['Granit Tencere', 'Bıçak Seti', 'Baharat Takımı'] },
+            { name: 'Dekorasyon', products: ['Duvar Saati', 'Tablo', 'Vazo'] },
+            { name: 'Tekstil', products: ['Nevresim Takımı', 'Banyo Havlusu'] }
+        ]
+    },
+    {
+        name: 'Minik Dostlar Petshop',
+        desc: 'Evcil hayvanlarınız için mama ve oyuncak çeşitleri.',
+        categories: [
+            { name: 'Kedi', products: ['Yetişkin Kedi Maması', 'Kedi Kumu', 'Tırmalama Tahtası'] },
+            { name: 'Köpek', products: ['Köpek Tasması', 'Ödül Maması', 'Tenis Topu'] },
+            { name: 'Kuş', products: ['Muhabbet Kuşu Yemi', 'Kafes'] }
+        ]
+    },
+    {
+        name: 'Güzellik Atölyesi',
+        desc: 'Kişisel bakım ve makyajda profesyonel ürünler.',
+        categories: [
+            { name: 'Cilt Bakımı', products: ['Nemlendirici Krem', 'Yüz Temizleme Jeli', 'Güneş Kremi'] },
+            { name: 'Makyaj', products: ['Ruj', 'Maskara', 'Far Paleti'] },
+            { name: 'Saç Bakımı', products: ['Şampuan', 'Saç Kremi'] }
+        ]
+    }
 ];
 
 async function request(path, options = {}, token = null) {
@@ -27,11 +107,12 @@ async function request(path, options = {}, token = null) {
 }
 
 async function seedMerchant(template, index) {
-    const randomSuffix = Math.floor(Math.random() * 10000);
-    const email = `test_merchant_${randomSuffix}_${index + 1}@nedunet.com`;
-    const phone = `55500${randomSuffix}${(index + 1).toString().padStart(2, '0')}`.substring(0, 11);
+    const batchId = 'batch' + Math.floor(Date.now() / 100000).toString().slice(-4);
+    const email = `test_${(index + 1)}_${batchId}@nedunet.com`;
+    const phone = `555${batchId}${(index + 1).toString().padStart(2, '0')}`.substring(0, 10);
 
     console.log(`\n--- Seeding Merchant ${index + 1}: ${template.name} ---`);
+    console.log(`Email: ${email} | Phone: ${phone}`);
 
     // 1. Register
     const regRes = await request('/api/Auth/register', {
@@ -47,7 +128,7 @@ async function seedMerchant(template, index) {
         })
     });
 
-    if (regRes.status !== 200) {
+    if (regRes.status !== 200 && !regRes.data?.success) {
         console.error(`Register failed for ${email}`, regRes.data);
         return null;
     }
@@ -70,20 +151,20 @@ async function seedMerchant(template, index) {
             name: template.name,
             description: template.desc,
             phone: phone,
-            address: 'Test Adres 123',
+            address: 'Test Mahalle No:123',
             minimumOrderAmount: 50,
             deliveryFee: 15,
             autoAcceptOrders: true,
-            preparationTimeMinutes: 25
+            preparationTimeMinutes: 20
         })
     }, token);
 
-    if (!merchCreateRes.data?.success && merchCreateRes.status !== 200 && merchCreateRes.status !== 201) {
+    if (merchCreateRes.status !== 200 && !merchCreateRes.data?.success) {
         console.error(`Merchant profile creation failed for ${template.name}`, merchCreateRes.data);
         return null;
     }
 
-    // 4. Merchant Login (to get merchant specific token/context if needed)
+    // 4. Merchant Login
     const merchLogin = await request('/api/merchant/auth/login', {
         method: 'POST',
         body: JSON.stringify({ phoneOrEmail: email, password })
@@ -94,43 +175,36 @@ async function seedMerchant(template, index) {
         return null;
     }
 
-    // 5. Create Category
-    const catRes = await request('/api/merchant/menu/categories', {
-        method: 'POST',
-        body: JSON.stringify({
-            name: template.category,
-            description: `${template.name} ana kategorisi`,
-            displayOrder: 1
-        })
-    }, merchToken);
+    // 5. Create Categories and Products
+    for (const cat of template.categories) {
+        const catRes = await request('/api/merchant/menu/categories', {
+            method: 'POST',
+            body: JSON.stringify({ name: cat.name, description: `${cat.name} kategorisi`, displayOrder: 1 })
+        }, merchToken);
 
-    if (catRes.status === 200 && catRes.data?.data) {
-        const catId = catRes.data.data.id;
-        console.log(`Category created: ${template.category} (ID: ${catId})`);
+        if (catRes.status === 200 && catRes.data?.data) {
+            const catId = catRes.data.data.id;
+            console.log(`  Category [OK]: ${cat.name}`);
 
-        // 6. Create 2-3 Products
-        const products = [
-            { name: `${template.category} Ürünü 1`, price: 100 + (index * 10) },
-            { name: `${template.category} Ürünü 2`, price: 200 + (index * 10) }
-        ];
-
-        for (const p of products) {
-            await request('/api/merchant/products', {
-                method: 'POST',
-                body: JSON.stringify({
-                    name: p.name,
-                    description: `${p.name} açıklaması`,
-                    price: p.price,
-                    categoryId: catId,
-                    imageUrl: 'https://via.placeholder.com/500',
-                    variants: [{ name: 'Standart', price: p.price, stock: 100 }]
-                })
-            }, merchToken);
-            console.log(`Product created: ${p.name}`);
+            for (const pName of cat.products) {
+                const price = Math.floor(Math.random() * 450) + 50;
+                await request('/api/merchant/products', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        name: pName,
+                        description: `${pName} için harika bir açıklama.`,
+                        price: price,
+                        categoryId: catId,
+                        imageUrl: 'https://via.placeholder.com/300',
+                        variants: [{ name: 'Standart', price: price, stock: 99 }]
+                    })
+                }, merchToken);
+            }
+            console.log(`    Products [OK]: ${cat.products.length} adet`);
         }
     }
 
-    console.log(`Success! Merchant ${template.name} ready.`);
+    console.log(`Success! ${template.name} seeded.`);
     return { email, password, storeName: template.name };
 }
 
@@ -142,15 +216,11 @@ async function run() {
     }
 
     console.log('\n\n=========================================');
-    console.log('TEST MAĞAZALARI KİMLİK BİLGİLERİ');
+    console.log('FINAL MERCHANT LIST (COPY TO WALKTHROUGH)');
     console.log('=========================================');
     results.forEach((r, idx) => {
-        console.log(`${idx + 1}. Mağaza: ${r.storeName}`);
-        console.log(`   Email: ${r.email}`);
-        console.log(`   Şifre: ${r.password}`);
-        console.log('-----------------------------------------');
+        console.log(`| ${r.storeName} | ${r.email} | ${r.password} |`);
     });
-    console.log('Tüm işlemler tamamlandı!');
 }
 
 run().catch(console.error);
