@@ -165,6 +165,19 @@ function setupLoginForm() {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+        const errorEl = document.getElementById('login-error');
+        const btn = document.getElementById('login-btn');
+        const btnText = btn.querySelector('.btn-text');
+        const btnLoader = btn.querySelector('.btn-loader');
+
+        errorEl.classList.add('hidden');
+        btnText.classList.add('hidden');
+        btnLoader.classList.remove('hidden');
+        btn.disabled = true;
+
         try {
             const res = await api.login(email, password);
 
@@ -238,7 +251,8 @@ function setupRegisterForm() {
                 email: email,
                 phone: phone,
                 password: password,
-                role: 2 // Merchant role (assuming 2 based on previous tests)
+                role: 2, // Backward compatibility
+                userType: "2" // Swagger v1 compatibility
             });
 
             if (!regRes.success) {
@@ -267,11 +281,21 @@ function setupRegisterForm() {
             if (merchRes.success) {
                 showToast('Mağaza başarıyla oluşturuldu!');
 
-                // Refresh login session to get the latest merchant ID bound to token
-                const finalLogin = await api.login(email, password);
-                if (finalLogin.success && finalLogin.data) {
-                    saveAuthResponse(finalLogin.data);
+                // Small delay to allow backend to finish indexing/linking
+                await new Promise(r => setTimeout(r, 1000));
+
+                // 4. Refresh login session to get the latest merchant ID bound to token
+                try {
+                    const finalLogin = await api.login(email, password);
+                    if (finalLogin.success && finalLogin.data) {
+                        saveAuthResponse(finalLogin.data);
+                    }
+                } catch (loginErr) {
+                    console.warn('Final merchant login failed, but continuing...', loginErr);
+                    // If merchant profile exists but login fails, we might still have user token
+                    if (merchRes.data) setMerchant(merchRes.data);
                 }
+
                 window.location.hash = '#/dashboard';
             } else {
                 throw new Error(merchRes.message || 'Mağaza profili oluşturulamadı.');
